@@ -1,4 +1,5 @@
-package main.java.com.invgestorback.model;
+
+package com.invgestorback.model;
 
 import jakarta.persistence.*;
 import java.util.HashSet;
@@ -15,8 +16,8 @@ public class Role {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "role_permission",
-        joinColumns = @JoinColumn(name = "role_id"),
+        name = "roles_permission",
+        joinColumns = @JoinColumn(name = "roles_id"),
         inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
     private Set<Permission> permissions = new HashSet<>();
@@ -24,5 +25,46 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
+    public Role() {}
+
+    public Role(String name) {
+        this.name = name;
+    }
+
     // getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    // other methods
+
 }

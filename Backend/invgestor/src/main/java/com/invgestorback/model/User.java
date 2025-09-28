@@ -1,21 +1,26 @@
-package main.java.com.invgestorback.model;
+package com.invgestorback.model;
 
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue; // Autoincrement
 import jakarta.persistence.GenerationType; // Generates ID
 import jakarta.persistence.Id;
+
+
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String password;
+    private String password; //stored hashed
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -27,11 +32,11 @@ public class User {
 
     public User() {} //Constructor Required by JPA
 
-    public User(String name, String email, String password, String role) {
-        this.name = name;
+    public User(String firstName, String email, String password, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.role = role;
     }
 
     // Getter and Setters
@@ -45,12 +50,21 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return firstName + " " + lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+
 
     public String getEmail() {
         return email;
@@ -68,13 +82,13 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
+    
 
 }
