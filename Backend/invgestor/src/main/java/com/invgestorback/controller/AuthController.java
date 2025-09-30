@@ -11,6 +11,7 @@ public class AuthController {
 
     public AuthController(UserService userService) {
         this.userService = userService;
+
     }
 
     @PostMapping("/register")
@@ -42,5 +43,10 @@ public class AuthController {
 
         public String getLastName() { return lastName; }
         public void setLastName(String lastName) { this.lastName = lastName; }
+    }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong ✅";
     }
 }

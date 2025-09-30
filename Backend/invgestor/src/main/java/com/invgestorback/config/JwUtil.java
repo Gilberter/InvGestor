@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.Date;
 
 public class JwUtil {
+
     private final SecretKey secretKey = Jwts.SIG.HS512.key().build(); //Signing key
 
 
