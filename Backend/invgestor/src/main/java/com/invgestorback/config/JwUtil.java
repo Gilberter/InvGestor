@@ -1,6 +1,7 @@
 package com.invgestorback.config;
 
 import io.jsonwebtoken.*;
+import org.springframework.context.annotation.Configuration;
 
 
 import javax.crypto.SecretKey;

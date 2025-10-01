@@ -2,6 +2,7 @@ package com.invgestorback.service;
 
 import com.invgestorback.model.*;
 import com.invgestorback.repository.UserRepository;
+import com.invgestorback.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.invgestorback.config.*;
@@ -11,10 +12,12 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     // Register New User
@@ -36,11 +39,16 @@ public class UserService {
 
         }
 
+        Role defaultRole = roleRepository.findByName("EMPLEADO")
+                .orElseThrow(() -> new RuntimeException("El rol EMPLEADO no existe."));
+
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(rawPassword));
         user.setFirstName(firstName);
         user.setLastName(lastName);
+
+        user.getRoles().add(defaultRole);
         return userRepository.save(user);
     }
 
@@ -52,5 +60,22 @@ public class UserService {
         return userRepository.findByEmail(email).filter(
                 user -> passwordEncoder.matches(rawPassword, user.getPassword())
         );
+    }
+
+    // Assign-Role
+    public User assignRoleToUser(String email, String rolename){
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("El email no existe"));
+        Role role = roleRepository.findByName(rolename).orElseThrow(() -> new RuntimeException("El rol no existe"));
+        user.getRoles().add(role);
+        return userRepository.save(user);
+
+    }
+
+    //delete-rol
+    public User deleteRoleFromUser(String email, String rolename){
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("El email no existe"));
+        Role role = roleRepository.findByName(rolename).orElseThrow(() -> new RuntimeException("El rol no existe"));
+        user.getRoles().remove(role);
+        return userRepository.save(user);
     }
 }

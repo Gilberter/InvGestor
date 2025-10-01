@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import com.invgestorback.model.*;
 import com.invgestorback.repository.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,17 +25,6 @@ public class SecurityConfig {
 
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .csrf(csrf -> csrf.disable()); // Optional: disable CSRF for testing
-
-        return http.build();
-    }
 
 
     @Bean
@@ -73,6 +64,24 @@ public class SecurityConfig {
             return roleRepository.save(role);
         });
     }
+    @Bean
+    public JwUtil jwUtil() {
+        return new JwUtil();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless API
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll() // register/login public// Allow access
+                        .anyRequest().authenticated() // All other requests require authentication
+                )
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
 
 
 }
