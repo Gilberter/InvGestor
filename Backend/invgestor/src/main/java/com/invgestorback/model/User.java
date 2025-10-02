@@ -3,6 +3,7 @@ package com.invgestorback.model;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 import jakarta.persistence.Entity;
@@ -86,6 +87,11 @@ public class User {
 
         return roles;
 
+    }
+
+    public Set<String> getRoleNames() {
+
+        return roles.stream().map(Role::getName).collect(Collectors.toSet());
     }
 
     public void setRoles(Set<Role> roles) {

@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
         return userService.login(request.getEmail(),request.getPassword()).map(
-                user -> jwUtil.generateToken(user.getEmail())
+                user -> jwUtil.generateToken(user.getEmail(), user.getRoleNames())
         ).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
 
