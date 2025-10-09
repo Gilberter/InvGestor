@@ -1,0 +1,162 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  background: #f9fafb;
+  color: #111;
+  font-family: 'Inter', sans-serif;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+  width: 230px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.sidebar-header {
+  text-align: center;
+}
+
+.logo {
+  width: 45px;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: -5px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.menu a.active,
+.menu a:hover {
+  background: #eef2ff;
+  color: #1d4ed8;
+}
+
+.sidebar-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* === MAIN === */
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.main-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.main-header p {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+/* === CARDS === */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 0.3rem;
+}
+
+.card .value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.card .change {
+  font-size: 0.8rem;
+}
+
+.change.positive {
+  color: #16a34a;
+}
+.change.negative {
+  color: #dc2626;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.card.wide {
+  background: #fff;
+  padding: 1rem;
+}
+
+.sales-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sales-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.sales-list li:last-child {
+  border-bottom: none;
+}
+
+.sales-list p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.amount {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}

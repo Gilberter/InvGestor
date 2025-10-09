@@ -1,0 +1,19 @@
+<div class="inventory-container">
+  <h2>Inventario</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{ p.name }}</td>
+        <td>{{ p.stock }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

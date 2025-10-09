@@ -1,0 +1,88 @@
+/* --- Estilos base para formularios (login y registro) --- */
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f3f4f6;
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0b3954;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 0.5rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+button {
+  margin-top: 1rem;
+  background: #111;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: #000;
+}
+
+.register-link,
+.forgot-link {
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  text-decoration: none;
+}

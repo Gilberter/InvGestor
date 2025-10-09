@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="header">
+    <h1>Gestión de Compras</h1>
+    <button class="btn-primary" (click)="nuevaCompra()">+ Nueva Compra</button>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Proveedor</th>
+          <th>Cantidad</th>
+          <th>Precio Unit.</th>
+          <th>Total</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of compras">
+          <td>{{ c.producto }}</td>
+          <td>{{ c.proveedor }}</td>
+          <td class="center">{{ c.cantidad }}</td>
+          <td class="right">{{ c.precioUnit | currency: 'COP':'symbol':'1.0-0' }}</td>
+          <td class="right">{{ c.total | currency: 'COP':'symbol':'1.0-0' }}</td>
+          <td class="center">{{ c.fecha }}</td>
+          <td class="center">
+            <span [class.recibida]="c.estado === 'Recibida'"
+                  [class.pendiente]="c.estado === 'Pendiente'"
+                  class="estado">{{ c.estado }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="resumen">
+    <div class="item">
+      <p>Total en Compras</p>
+      <h3>{{ totalCompras | currency: 'COP':'symbol':'1.0-0' }}</h3>
+    </div>
+    <div class="item">
+      <p>Total de Órdenes</p>
+      <h3>{{ totalOrdenes }}</h3>
+    </div>
+    <div class="item">
+      <p>Órdenes Pendientes</p>
+      <h3>{{ ordenesPendientes }}</h3>
+    </div>
+  </div>
+</div>

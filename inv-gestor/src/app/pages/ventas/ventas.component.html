@@ -1,0 +1,62 @@
+<div class="ventas-container">
+  <div class="header">
+    <h2>Gestión de Ventas</h2>
+    <button class="btn-nueva">+ Nueva Venta</button>
+  </div>
+
+  <input
+    type="text"
+    class="search"
+    placeholder="Buscar por producto o cliente..."
+  />
+
+  <table class="tabla-ventas">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cliente</th>
+        <th>Cantidad</th>
+        <th>Precio Unit.</th>
+        <th>Total</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let venta of ventas">
+        <td>{{ venta.producto }}</td>
+        <td>{{ venta.cliente }}</td>
+        <td>{{ venta.cantidad }}</td>
+        <td>{{ venta.precioUnit | currency:'COP':'symbol-narrow' }}</td>
+        <td>{{ venta.total | currency:'COP':'symbol-narrow' }}</td>
+        <td>{{ venta.fecha }}</td>
+        <td>
+          <span
+            class="estado"
+            [ngClass]="{
+              completada: venta.estado === 'Completada',
+              pendiente: venta.estado === 'Pendiente'
+            }"
+          >
+            {{ venta.estado }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="resumen">
+    <div>
+      <h3>{{ totalVentas | currency:'COP':'symbol-narrow' }}</h3>
+      <p>Total en Ventas</p>
+    </div>
+    <div>
+      <h3>{{ ventas.length }}</h3>
+      <p>Total de Ventas</p>
+    </div>
+    <div>
+      <h3>{{ ventasCompletadas }}</h3>
+      <p>Ventas Completadas</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+@import "../../../shared/form-base.scss";
+
+/* Botón subir logo */
+.upload-button {
+  background-color: #e5e5e5;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.upload-button:hover {
+  background-color: #d4d4d4;
+}
+
+.forgot-link {
+  color: #0077ff;
+}
