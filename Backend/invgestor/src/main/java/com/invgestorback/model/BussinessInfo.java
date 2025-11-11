@@ -1,66 +1,88 @@
 package com.invgestorback.model;
 
 import jakarta.persistence.*;
-import java.util.*;
+import java.util.Date;
+
 @Entity
-@Table (name = "bussiness_info")
+@Table(name = "bussiness_info")
 public class BussinessInfo {
+
     @Id
-    String id_tributaria;
-    String bussiness_name;
-    Date fecha_registro_mercantil;
-    Date fecha_declara_de_renta;
-    Long impuesto_renta;
+    @Column(name = "id_tributaria")
+    private Long idTributaria;
 
-    public BussinessInfo() {
+    @Column(name = "bussiness_name")
+    private String bussinessName;
+
+    @Temporal(TemporalType.DATE)
+    private Date fechaRegistroMercantil;
+
+    @Temporal(TemporalType.DATE)
+    private Date fechaDeclaraDeRenta;
+
+    private Long impuestoRenta;
+
+    @OneToOne(mappedBy = "bussinessInfo")
+    private BussinessSetUp bussinessSetUp;
+
+    public BussinessInfo() {}
+
+    public BussinessInfo(Long idTributaria, String bussinessName, Date fechaRegistroMercantil,
+                         Date fechaDeclaraDeRenta, Long impuestoRenta) {
+        this.idTributaria = idTributaria;
+        this.bussinessName = bussinessName;
+        this.fechaRegistroMercantil = fechaRegistroMercantil;
+        this.fechaDeclaraDeRenta = fechaDeclaraDeRenta;
+        this.impuestoRenta = impuestoRenta;
     }
 
-    public BussinessInfo(String business_name, String id_tributaria, Date fecha_registro_mercantil, Date fecha_declara_de_renta, Long impuesto_renta) {
-        this.bussiness_name = business_name;
-        this.id_tributaria = id_tributaria;
-        this.fecha_registro_mercantil = fecha_registro_mercantil;
-        this.fecha_declara_de_renta = fecha_declara_de_renta;
-        this.impuesto_renta = impuesto_renta;
+    // Getters & Setters
+
+    public Long getIdTributaria() {
+        return idTributaria;
     }
 
-    public String getBussiness_name() {
-        return bussiness_name;
+    public void setIdTributaria(Long idTributaria) {
+        this.idTributaria = idTributaria;
     }
 
-    public void setBussiness_name(String bussiness_name) {
-        this.bussiness_name = bussiness_name;
+    public String getBussinessName() {
+        return bussinessName;
     }
 
-    public String getId_tributaria() {
-        return id_tributaria;
-
+    public void setBussinessName(String bussinessName) {
+        this.bussinessName = bussinessName;
     }
 
-    public void setId_tributaria(String id_tributaria) {
-        this.id_tributaria = id_tributaria;
+    public Date getFechaRegistroMercantil() {
+        return fechaRegistroMercantil;
     }
 
-    public Date getFecha_registro_mercantil() {
-        return fecha_registro_mercantil;
+    public void setFechaRegistroMercantil(Date fechaRegistroMercantil) {
+        this.fechaRegistroMercantil = fechaRegistroMercantil;
     }
 
-    public void setFecha_registro_mercantil(Date fecha_registro_mercantil) {
-        this.fecha_registro_mercantil = fecha_registro_mercantil;
-    }
-    public Date getFecha_declara_de_renta() {
-        return fecha_declara_de_renta;
+    public Date getFechaDeclaraDeRenta() {
+        return fechaDeclaraDeRenta;
     }
 
-    public void setFecha_declara_de_renta(Date fecha_declara_de_renta) {
-        this.fecha_declara_de_renta = fecha_declara_de_renta;
+    public void setFechaDeclaraDeRenta(Date fechaDeclaraDeRenta) {
+        this.fechaDeclaraDeRenta = fechaDeclaraDeRenta;
     }
 
-    public Long getImpuesto_renta() {
-        return impuesto_renta;
+    public Long getImpuestoRenta() {
+        return impuestoRenta;
     }
 
-    public void setImpuesto_renta(Long impuesto_renta) {
-        this.impuesto_renta = impuesto_renta;
+    public void setImpuestoRenta(Long impuestoRenta) {
+        this.impuestoRenta = impuestoRenta;
     }
 
+    public BussinessSetUp getBussinessSetUp() {
+        return bussinessSetUp;
+    }
+
+    public void setBussinessSetUp(BussinessSetUp bussinessSetUp) {
+        this.bussinessSetUp = bussinessSetUp;
+    }
 }

@@ -2,45 +2,49 @@ package com.invgestorback.model;
 
 import jakarta.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue; // Autoincrement
-import jakarta.persistence.GenerationType; // Generates ID
-import jakarta.persistence.Id;
-
 
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String firstName;
     private String lastName;
     private String email;
-    private String password; //stored hashed
+    private String password; // stored hashed
+    @OneToMany(mappedBy = "user")
+    private List<Sale> sales;
+    @OneToMany(mappedBy = "user")
+    private List<Purchasing> purchasings;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "user_role",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User() {} //Constructor Required by JPA
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id", referencedColumnName = "id_tributaria")
+    private BussinessSetUp bussinessSetUp;
 
-    public User(String firstName, String email, String password, String lastName) {
+    public User() {}
+
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
-    // Getter and Setters
+    // --- Getters & Setters ---
 
     public Long getId() {
         return id;
@@ -50,22 +54,25 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
+    public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getLastName() {
+        return lastName;
     }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-
 
     public String getEmail() {
         return email;
@@ -84,19 +91,22 @@ public class User {
     }
 
     public Set<Role> getRoles() {
-
         return roles;
-
     }
 
     public Set<String> getRoleNames() {
-
         return roles.stream().map(Role::getName).collect(Collectors.toSet());
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-    
 
+    public BussinessSetUp getBussinessSetUp() {
+        return bussinessSetUp;
+    }
+
+    public void setBussinessSetUp(BussinessSetUp bussinessSetUp) {
+        this.bussinessSetUp = bussinessSetUp;
+    }
 }

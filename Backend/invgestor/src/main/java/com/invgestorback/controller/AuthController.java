@@ -47,25 +47,7 @@ public class AuthController {
         return "pong ✅";
     }
 
-    @PostMapping("/assign-role")
-    public User assignRole(@RequestBody AssignRoleRequest request) {
-        return userService.assignRoleToUser(request.getEmail(), request.getRolename());
-    }
 
-    @PostMapping("/remove-rol")
-    public User removeRole(@RequestBody AssignRoleRequest request) {
-        return userService.deleteRoleFromUser(request.getEmail(), request.getRolename());
-    }
-
-    public static class AssignRoleRequest {
-        private String email;
-        private String rolename;
-        public String getEmail() { return email; }
-
-        public String getRolename() { return rolename; }
-
-
-    }
 
     // Clase interna para el request
     public static class RegisterRequest {
