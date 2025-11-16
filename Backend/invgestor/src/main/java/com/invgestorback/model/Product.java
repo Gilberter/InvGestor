@@ -13,6 +13,7 @@ public class Product {
     private Boolean imageProduct;
     private Double unitPrice;
     private long stockQuantity;
+    private long limitStockQuantity;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategory category;
@@ -21,13 +22,12 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, String descriptionProduct, Boolean imageProduct, Double unitPrice, ProductState state, Long stockQuantity) {
-        this.nameProduct = name;
+    public Product(String nameProduct, String descriptionProduct, Boolean imageProduct, Double unitPrice, Long limitStockQuantity) {
+        this.nameProduct = nameProduct;
         this.descriptionProduct = descriptionProduct;
         this.imageProduct = imageProduct;
         this.unitPrice = unitPrice;
-        this.state = state;
-        this.stockQuantity = stockQuantity;
+        this.limitStockQuantity = limitStockQuantity;
 
     }
 
@@ -63,7 +63,7 @@ public class Product {
         this.unitPrice = valueProduct;
     }
     public ProductState getState() {
-        return state;
+        return this.state;
     }
     public void setState(ProductState state) {
         this.state = state;
@@ -74,6 +74,30 @@ public class Product {
     public long getStockQuantity() {
         return stockQuantity;
     }
+
+    public void setLimitStockQuantity(long limitStockQuantity) {
+        this.limitStockQuantity = limitStockQuantity;
+    }
+
+    public void setStateCalculator(){
+        if (limitStockQuantity > stockQuantity){
+            state = ProductState.valueOf("Out_Of_Stock");
+        } else {
+            state = ProductState.valueOf("In_Stock");
+        }
+    }
+
+    public void addQuantityProduct(long quantity){
+        stockQuantity += quantity;
+    }
+    public long getLimitStockQuantity() {
+        return limitStockQuantity;
+    }
+
+    public ProductCategory getCategory() {
+        return category;
+    }
+
 
 
 }

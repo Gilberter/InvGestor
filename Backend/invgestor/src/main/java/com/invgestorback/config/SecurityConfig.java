@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -66,5 +67,54 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public CommandLineRunner initRoles(RoleRepository roleRepository, UserRepository userRepository, SaleItemRepository saleItemRepository, ProductRepository productRepository) {
+        return args -> {
+            // Define the role names you want in your system
+            String[] roleNames = {"OWNER", "ADMIN", "INVESTOR", "BUSINESS"};
+
+            for (String roleName : roleNames) {
+                // If not exists, create
+                roleRepository.findByName(roleName)
+                        .orElseGet(() -> {
+                            Role role = new Role(roleName);
+                            roleRepository.save(role);
+                            System.out.println("✅ Role created: " + roleName);
+                            return role;
+                        });
+            }
+
+            String emailUser = "admin1234@gmail.com";
+            String passwordUser = "admin123";
+            userRepository.findByEmail(emailUser).orElseGet(
+                    () -> {
+                        User user = new User();
+
+                        user.setEmail(emailUser);
+                        user.setPassword(passwordEncoder().encode(passwordUser));
+                        System.out.println("<UNK> User created: " + emailUser);
+                        userRepository.save(user);
+                        return user;
+                    }
+            );
+
+            String nameProduct = "Televisor";
+            productRepository.findByNameProduct(nameProduct).orElseGet(
+                    () -> {
+                        Product product = new Product();
+                        product.setNameProduct(nameProduct);
+                        product.setUnitPrice(1000.0);
+                        product.setLimitStockQuantity(10);
+                        productRepository.save(product);
+                        return product;
+                    }
+            );
+
+
+
+
+        };
     }
 }

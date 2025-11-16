@@ -92,7 +92,7 @@ public class AuthControllerTest {
         String email = "test@example.com";
         String password = "password";
         Set<String> roles = Set.of("ADMIN");
-        Mockito.when(userService.login(email,password)).thenReturn(Optional.of(mockUser));
+        // Mockito.when(userService.login(email,password)).thenReturn(Optional.of(mockUser));
         Mockito.when(jwUtil.generateToken(email,roles)).thenReturn("mocked-jwt-token");
         System.out.println();
         String loginJson = """

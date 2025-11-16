@@ -15,12 +15,14 @@ public class AuthController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final JwUtil jwUtil;
+    private final AuthService authService;
 
-    public AuthController(UserService userService, UserRepository userRepository, RoleRepository roleRepository, JwUtil jwUtil) {
+    public AuthController(UserService userService, UserRepository userRepository, RoleRepository roleRepository, JwUtil jwUtil, AuthService authService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.jwUtil = jwUtil;
+        this.authService = authService;
     }
 
     @PostMapping("/register")
@@ -35,10 +37,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
-        return userService.login(request.getEmail(),request.getPassword()).map(
-                user -> jwUtil.generateToken(user.getEmail(), user.getRoleNames())
-        ).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        String token = authService.login(request.getEmail(), request.getPassword());
+        System.out.println("token: " + token);
+        return token;
+        //return userService.login(request.getEmail(),request.getPassword()).map(
+        //        user -> jwUtil.generateToken(user.getEmail(), user.getRoleNames())
+        //).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
     }
+
+
 
 
 

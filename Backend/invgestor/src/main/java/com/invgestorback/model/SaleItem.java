@@ -1,5 +1,6 @@
 package com.invgestorback.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,6 +11,7 @@ public class SaleItem {
 
     @ManyToOne
     @JoinColumn(name = "sale_id")
+    @JsonBackReference
     private Sale sale;
 
     @ManyToOne
@@ -27,6 +29,7 @@ public class SaleItem {
         this.quantity = quantity;
         this.price = price;
     }
+
 
     public long getId() {
         return id;

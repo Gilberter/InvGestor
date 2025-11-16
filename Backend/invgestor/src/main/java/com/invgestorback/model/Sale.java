@@ -1,11 +1,14 @@
 package com.invgestorback.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.invgestorback.EnumStates.SaleState;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,30 +21,37 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
-    @OneToMany(mappedBy = "sale")
-    private List<SaleItem> saleItems;
-    @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Instant date;
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<SaleItem> saleItems = new ArrayList<>();
+
+    private LocalDateTime date; // Add default value
     private long total;
     @Enumerated(EnumType.STRING)
     private SaleState saleState;
 
     public Sale() {
-        this.saleItems = new ArrayList<>();
     }
-    public Sale(long id, String clientName, SaleState saleState, Instant date, long total, List<SaleItem> saleItems, User user) {
-        this.id = id;
+    public Sale(String clientName, SaleState saleState, List<SaleItem> saleItems, User user) {
         this.clientName = clientName;
         this.saleState = saleState;
-        this.date = date;
-        this.total = total;
-        this.saleItems = saleItems;
+        this.date = LocalDateTime.now();
+        // Add all sale items properly
+        if (saleItems != null) {
+            saleItems.forEach(this::addSaleItem);
+        }
         this.user = user;
 
     }
     public long getId() {
         return id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public String getClientName() {
@@ -52,13 +62,52 @@ public class Sale {
     }
 
     public SaleState getSaleState() {
-        return saleState;
+        return this.saleState;
     }
     public void setSaleState(SaleState saleState) {
         this.saleState = saleState;
     }
-    public List<SaleItem> getItems() {
-        return saleItems;
+    public List<SaleItem> getSaleItems() {
+        return this.saleItems;
+    }
+    public void setSaleItems(List<SaleItem> items) {
+
+        // Remove existing items properly
+        for (SaleItem item : new ArrayList<>(this.saleItems)) {
+            removeSaleItem(item);
+        }
+
+        // Add new items safely
+        if (items != null) {
+            for (SaleItem item : items) {
+                addSaleItem(item);
+            }
+        }
     }
 
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addSaleItem(SaleItem saleItem) {
+        saleItems.add(saleItem);
+        saleItem.setSale(this);
+    }
+    public void removeSaleItem(SaleItem saleItem) {
+        saleItems.remove(saleItem);
+        saleItem.setSale(null);
+    }
+    public void setTotal(long total) {
+        this.total = total;
+    }
+    public long getTotal() {
+        return total;
+    }
+
+    public long recalculateTotal() {
+        return saleItems.stream()
+                .mapToLong(item -> (long)(item.getPrice() * item.getQuantity()))
+                .sum();
+    }
 }

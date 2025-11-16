@@ -2,6 +2,10 @@ package com.invgestorback.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "bussiness_setup")
 public class BussinessSetUp {
@@ -16,6 +20,16 @@ public class BussinessSetUp {
     private String password;
     private String nameResponsible;
     private String ccResponsible;
+    private String emailResponsible;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "bussiness_roles",
+            joinColumns = @JoinColumn(name = "bussiness_id", referencedColumnName = "id_tributaria"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_tributaria", referencedColumnName = "id_tributaria")
@@ -24,12 +38,14 @@ public class BussinessSetUp {
     public BussinessSetUp() {}
 
     public BussinessSetUp(Long idTributaria, String bussinessName, String password,
-                          String nameResponsible, String ccResponsible) {
+                          String nameResponsible, String ccResponsible, String emailResponsible) {
         this.idTributaria = idTributaria;
         this.bussinessName = bussinessName;
         this.password = password;
         this.nameResponsible = nameResponsible;
         this.ccResponsible = ccResponsible;
+        this.emailResponsible = emailResponsible;
+
     }
 
     // Getters & Setters
@@ -83,5 +99,21 @@ public class BussinessSetUp {
         if (bussinessInfo != null) {
             bussinessInfo.setBussinessSetUp(this);
         }
+    }
+
+    public String getEmailResponsible() {
+        return emailResponsible;
+    }
+    public void setEmailResponsible(String emailResponsible) {
+        this.emailResponsible = emailResponsible;
+    }
+    public Set<Role> getRole() {
+        return roles;
+    }
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
+    }
+    public Set<String> getRoleName() {
+        return this.roles.stream().map(Role::getName).collect(Collectors.toSet());
     }
 }

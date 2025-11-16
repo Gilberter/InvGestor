@@ -30,7 +30,7 @@ public class HomeController {
 
     @PostMapping("/register-business")
     public BussinessSetUp registerBussiness(@RequestBody HomeController.BussinesRegister request) {
-        return bussinessSetUpService.registerBussinessSetUp(request.id_tributaria,request.bussiness_name,request.password,request.name_responsible,request.cc_responsible);
+        return bussinessSetUpService.registerBussinessSetUp(request.getEmail_responsible(),request.getPassword(),request.getBussiness_name(),request.getId_tributaria(),request.getName_responsible(),request.getCc_responsible());
     }
 
     public static class BussinesRegister {
@@ -39,6 +39,7 @@ public class HomeController {
         private String password;
         private String name_responsible;
         private String cc_responsible;
+        private String email_responsible;
 
         public Long getId_tributaria() {
             return id_tributaria;
@@ -54,6 +55,9 @@ public class HomeController {
         }
         public String getCc_responsible() {
             return cc_responsible;
+        }
+        public String getEmail_responsible() {
+            return email_responsible;
         }
     }
 

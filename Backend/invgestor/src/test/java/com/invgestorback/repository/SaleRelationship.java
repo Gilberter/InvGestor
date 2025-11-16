@@ -38,17 +38,17 @@ public class SaleRelationship {
         item.setPrice(50.0);
         item.setSale(sale);
 
-        sale.getItems().add(item);
+        sale.getSaleItems().add(item);
 
         // 3️⃣ Persist the sale (should cascade to items)
         saleRepository.save(sale);
 
         // 4️⃣ Verify sale was saved and cascade worked
         Sale savedSale = saleRepository.findById(sale.getId()).orElseThrow();
-        Assertions.assertEquals(1, savedSale.getItems().size(), "Sale should have 1 item");
+        Assertions.assertEquals(1, savedSale.getSaleItems().size(), "Sale should have 1 item");
 
         // 5️⃣ Verify product link
-        SaleItem savedItem = savedSale.getItems().get(0);
+        SaleItem savedItem = savedSale.getSaleItems().get(0);
         Assertions.assertEquals("Keyboard", savedItem.getProduct().getNameProduct(), "Product name should match");
     }
 }

@@ -25,6 +25,7 @@ public class JwUtil {
         System.out.println(secretKey);
     }
     public String generateToken(String email, Set<String> roles) {
+
         return Jwts.builder()
                 .subject(email) // registered claim set to email
                 .claim("roles", roles)
@@ -57,5 +58,13 @@ public class JwUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public String extractRole(String token) {
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload().getSubject();
     }
 }

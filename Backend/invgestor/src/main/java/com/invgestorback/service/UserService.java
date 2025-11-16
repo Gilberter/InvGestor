@@ -1,6 +1,7 @@
 package com.invgestorback.service;
 
 import com.invgestorback.model.*;
+import com.invgestorback.repository.BussinessSetUpRepository;
 import com.invgestorback.repository.UserRepository;
 import com.invgestorback.repository.RoleRepository;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final BussinessSetUpRepository bussinessSetUpRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository, BussinessSetUpRepository bussinessSetUpRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.bussinessSetUpRepository = bussinessSetUpRepository;
     }
 
     // Register New User

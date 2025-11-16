@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface BussinessSetUpRepository extends JpaRepository<BussinessSetUp, Long> {
 
     Optional<BussinessSetUp> findByIdTributaria(Long id); // Find BussinesSetUp by its own ID
+    Optional<BussinessSetUp> findByEmailResponsible(String email);
+    boolean existsByEmailResponsible(String email);
 
     //Optional<BussinessSetUp> findByBussiness_info(BussinessInfo info);
 }
