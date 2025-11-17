@@ -38,6 +38,7 @@ public class AuthService {
 
             // Generate JWT for user
             System.out.println(user.getPassword());
+            System.out.println(user.getRoles());
 
             return jwtUtil.generateToken(user.getEmail(), user.getRoleNames());
         }

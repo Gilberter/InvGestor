@@ -4,11 +4,13 @@ import com.invgestorback.model.*;
 import com.invgestorback.repository.BussinessSetUpRepository;
 import com.invgestorback.repository.UserRepository;
 import com.invgestorback.repository.RoleRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.invgestorback.config.*;
 
-import java.util.Optional;
+import java.util.*;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -42,7 +44,7 @@ public class UserService {
 
         }
 
-        Role defaultRole = roleRepository.findByName("EMPLEADO")
+        Role defaultRole = roleRepository.findByName("EMPLOYED")
                 .orElseThrow(() -> new RuntimeException("El rol EMPLEADO no existe."));
 
         User user = new User();
@@ -72,13 +74,17 @@ public class UserService {
         user.getRoles().add(role);
         return userRepository.save(user);
 
+
     }
 
     //delete-rol
     public User deleteRoleFromUser(String email, String rolename){
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("El email no existe"));
         Role role = roleRepository.findByName(rolename).orElseThrow(() -> new RuntimeException("El rol no existe"));
-        user.getRoles().remove(role);
+        user.removeRole(role);
         return userRepository.save(user);
+
     }
+
+
 }

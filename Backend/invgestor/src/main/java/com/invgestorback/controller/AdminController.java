@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import com.invgestorback.service.UserService;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,13 +38,26 @@ public class AdminController {
     }
 
     @PostMapping("/assign-role")
-    public User assignRole(@RequestBody AdminController.RoleRequest request) {
-        return userService.assignRoleToUser(request.getEmail(), request.getRolename());
+    public ResponseEntity<ResponseMessageUserService> assignRole(@RequestBody AdminController.RoleRequest request) {
+        User user = userService.assignRoleToUser(request.getEmail(), request.getRolename());
+        ResponseMessageUserService response;
+        if (user == null) {
+            response = new ResponseMessageUserService("No se encontro usuario",null,null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+        return ResponseEntity.ok(new ResponseMessageUserService("Se asigno rol",user.getEmail(),user.getRoleNamesList()));
     }
 
     @PostMapping("/remove-rol")
-    public User removeRole(@RequestBody AdminController.RoleRequest request) {
-        return userService.deleteRoleFromUser(request.getEmail(), request.getRolename());
+    public ResponseEntity<ResponseMessageUserService> removeRole(@RequestBody AdminController.RoleRequest request) {
+        User user = userService.deleteRoleFromUser(request.getEmail(), request.getRolename());
+        ResponseMessageUserService response;
+        System.out.println("hola");
+        if (user == null) {
+            response = new ResponseMessageUserService("No se encontro usuario",null,null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+        return ResponseEntity.ok(new ResponseMessageUserService("Se elimino rol",user.getEmail(),user.getRoleNamesList()));
     }
 
     @PostMapping("/add-newProduct")
@@ -67,6 +82,16 @@ public class AdminController {
 
     }
 
+    @PostMapping("/register")
+    public User register(@RequestBody AuthController.RegisterRequest request) {
+        return userService.registerUser(
+                request.getEmail(),
+                request.getPassword(),
+                request.getFirstName(),
+                request.getLastName()
+        );
+    }
+
     @PostMapping("/test")
     public String test() {
         return "test";
@@ -89,6 +114,30 @@ public class AdminController {
         public Long getLimitStockQuantity() {return limitStockQuantity;}
 
     }
+    public static class ResponseMessageUserService {
+        private String message;
+        private String email;
+        private List<String> roles = new ArrayList<>();
+
+        public ResponseMessageUserService(String message, String email, List<String> roles) {
+            this.message = message;
+            this.email = email;
+            this.roles = roles;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public List<String> getRoles() {
+            return roles;
+        }
+    }
+
 
     public static class EditProductRequest {
         private long idProduct;

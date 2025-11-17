@@ -1,13 +1,12 @@
 package com.invgestorback.model;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -23,7 +22,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Purchasing> purchasings;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -32,16 +31,17 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_id", referencedColumnName = "id_tributaria")
+    @JoinColumn(name = "bussiness_id", referencedColumnName = "id_tributaria")
     private BussinessSetUp bussinessSetUp;
 
     public User() {}
 
-    public User(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String email, String password, Set<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        setRoles(roles);
     }
 
     // --- Getters & Setters ---
@@ -99,8 +99,21 @@ public class User {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+        if (roles != null) {
+            // Create a new HashSet to safely copy the elements
+            this.roles = new HashSet<>(roles);
+        } else {
+            this.roles = Collections.emptySet(); // Or initialize to an empty set: this.roles = Collections.emptySet();
+        }
     }
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+
+    }
+
 
     public BussinessSetUp getBussinessSetUp() {
         return bussinessSetUp;
@@ -108,5 +121,8 @@ public class User {
 
     public void setBussinessSetUp(BussinessSetUp bussinessSetUp) {
         this.bussinessSetUp = bussinessSetUp;
+    }
+    public List<String> getRoleNamesList() {
+        return roles.stream().map(Role::getName).collect(Collectors.toList());
     }
 }

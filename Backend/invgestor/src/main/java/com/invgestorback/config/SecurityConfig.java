@@ -70,10 +70,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CommandLineRunner initRoles(RoleRepository roleRepository, UserRepository userRepository, SaleItemRepository saleItemRepository, ProductRepository productRepository) {
+    public CommandLineRunner initRoles(RoleRepository roleRepository, UserRepository userRepository, SaleItemRepository saleItemRepository, ProductRepository productRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             // Define the role names you want in your system
-            String[] roleNames = {"OWNER", "ADMIN", "INVESTOR", "BUSINESS"};
+            String[] roleNames = {"OWNER", "ADMIN", "EMPLOYED"};
 
             for (String roleName : roleNames) {
                 // If not exists, create
@@ -88,15 +88,18 @@ public class SecurityConfig {
 
             String emailUser = "admin1234@gmail.com";
             String passwordUser = "admin123";
+
             userRepository.findByEmail(emailUser).orElseGet(
                     () -> {
-                        User user = new User();
 
-                        user.setEmail(emailUser);
-                        user.setPassword(passwordEncoder().encode(passwordUser));
-                        System.out.println("<UNK> User created: " + emailUser);
+                        List<String> roles = new ArrayList<>();
+                        roles.add("ADMIN");
+                        roles.add("EMPLOYED");
+                        Set<Role> roleset = roleRepository.findRoleByNameIn(roles).orElseThrow(() -> new UsernameNotFoundException("No roles found"));
+                        User user = new User("Juan","Vanegas",emailUser,passwordEncoder.encode(passwordUser),roleset);
                         userRepository.save(user);
                         return user;
+
                     }
             );
 
