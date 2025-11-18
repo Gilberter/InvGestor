@@ -1,19 +1,70 @@
 <div class="productos-container">
-  <header class="header">
-    <h1>Gestión de Productos</h1>
-    <p>Administra tu inventario de productos</p>
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h2>Gestión de Productos</h2>
+      <p>Administra tu inventario de productos</p>
+    </div>
+
     <button class="btn-nuevo">+ Nuevo Producto</button>
-  </header>
+  </div>
 
-  <section class="buscador">
-    <input type="text" placeholder="🔍 Buscar productos por nombre o categoría..." />
-  </section>
+  <!-- Buscador -->
+  <input
+    type="text"
+    class="search"
+    placeholder="Buscar productos por nombre o categoría..."
+  />
 
-  <section class="lista-productos">
-    <!-- Aquí tus tarjetas de producto -->
-  </section>
+  <!-- Grid de productos -->
+  <div class="grid">
+    <div class="card" *ngFor="let p of productos">
+      <div class="card-header">
+        <h3>{{ p.nombre }}</h3>
+        <div class="acciones">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash"></i>
+        </div>
+      </div>
 
-  <section class="resumen">
-    <!-- Aquí tu resumen del inventario -->
-  </section>
+      <p class="categoria">{{ p.categoria }}</p>
+      <p class="descripcion">{{ p.descripcion }}</p>
+
+      <p class="precio">Precio:
+        <strong>{{ p.precio | currency:'COP' }}</strong>
+      </p>
+
+      <p class="stock">
+        Stock: <strong>{{ p.stock }} unidades</strong>
+        <span class="badge" [ngClass]="p.stock > 0 ? 'stock-ok' : 'stock-low'">
+          {{ p.stock > 0 ? 'En stock' : 'Bajo stock' }}
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Resumen -->
+  <div class="resumen">
+    <div>
+      <h3>{{ productos.length }}</h3>
+      <p>Total Productos</p>
+    </div>
+
+    <div>
+      <h3>{{ totalUnidades }}</h3>
+      <p>Unidades en Stock</p>
+    </div>
+
+    <div>
+      <h3>{{ totalValor | currency:'COP' }}</h3>
+      <p>Valor Total Inventario</p>
+    </div>
+
+    <div>
+      <h3>{{ productosStockBajo }}</h3>
+      <p>Productos Stock Bajo</p>
+    </div>
+  </div>
+
 </div>
