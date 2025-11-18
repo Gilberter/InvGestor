@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@use './palette' as palette;
+
+// Paletas Material
+$invgestor-primary: mat.m2-define-palette(mat.$m2-indigo-palette, 500, 300, 700);
+$invgestor-accent: mat.m2-define-palette(mat.$m2-amber-palette, 500, 300, 700);
+$invgestor-warn: mat.m2-define-palette(mat.$m2-red-palette, 500);
+
+$invgestor-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $invgestor-primary,
+    accent: $invgestor-accent,
+    warn: $invgestor-warn,
+  )
+));
+
+@include mat.all-component-themes($invgestor-theme);
