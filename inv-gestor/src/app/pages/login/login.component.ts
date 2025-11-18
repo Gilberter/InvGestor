@@ -14,6 +14,7 @@ export class LoginComponent {
 
   username: string = '';
   password: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -21,15 +22,30 @@ export class LoginComponent {
   ) {}
 
   login() {
+    if (!this.username || !this.password) {
+      alert('Please enter both email and password');
+      return;
+    }
+
+    this.isLoading = true;
+
     this.authService.login(this.username, this.password).subscribe({
       next: (token) => {
-        console.log('TOKEN RECIBIDO:', token);
-        localStorage.setItem('token', token);
+        this.isLoading = false;
+        console.log('Login successful, token stored:', token);
+        
+        // Token is automatically stored by the service
+        // Verify token is stored
+        const storedToken = this.authService.getToken();
+        console.log('Token stored in localStorage:', storedToken);
+        
+        // Redirect to dashboard
         this.router.navigate(['/dashboard']);
       },
-      error: (err) => {
-        console.error('Error en login:', err);
-        alert('Credenciales incorrectas');
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Login failed:', error);
+        alert('Login failed. Please check your credentials.');
       }
     });
   }
