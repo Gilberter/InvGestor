@@ -1,3 +1,6 @@
+// app.routes.ts
+
+
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
