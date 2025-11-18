@@ -6,13 +6,12 @@ Este repositorio contiene código y recursos para **[Nombre del Proyecto]**. Aqu
 
 ---
 
-### Imágenes (PNG / JPEG)
+### Banner
 
 Inserta imágenes locales:
 
 ```markdown
-![Texto alternativo para PNG](BANNER.png)
-![Texto alternativo para JPEG](BANNER.jpg)
+!(BANNER.jpg)
 ```
 
 Inserta imágenes desde la web:
@@ -104,5 +103,6 @@ Ejemplo de `set` en texto:
 ---
 
 ¿Quieres que adapte este README a un lenguaje de programación específico, añada más ejemplos (por ejemplo JS, Java), o genere una versión lista para copiar en GitHub automáticamente?
+
 
 
