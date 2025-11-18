@@ -1,10 +1,4 @@
-# Proyecto: Nombre del Proyecto
-
-## ✨ Subtítulo o lema corto
-
-Una breve frase que describa el propósito principal del proyecto.
-
----
+# Proyecto: Credit Card Fraud Detection
 
 ### Descripción
 
@@ -17,8 +11,8 @@ Este repositorio contiene código y recursos para **[Nombre del Proyecto]**. Aqu
 Inserta imágenes locales:
 
 ```markdown
-![Texto alternativo para PNG](assets/imagen-ejemplo.png)
-![Texto alternativo para JPEG](assets/foto-ejemplo.jpg)
+![Texto alternativo para PNG](banner.png)
+![Texto alternativo para JPEG](banner.jpg)
 ```
 
 Inserta imágenes desde la web:
@@ -110,3 +104,4 @@ Ejemplo de `set` en texto:
 ---
 
 ¿Quieres que adapte este README a un lenguaje de programación específico, añada más ejemplos (por ejemplo JS, Java), o genere una versión lista para copiar en GitHub automáticamente?
+
