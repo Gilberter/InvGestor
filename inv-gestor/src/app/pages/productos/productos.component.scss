@@ -1,0 +1,176 @@
+.productos-container {
+  background: #fff;
+  padding: 2rem;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+  }
+}
+
+.btn-nuevo {
+  background: #2563eb;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+}
+
+/* Buscador */
+.search-container {
+  margin-bottom: 1.5rem;
+}
+
+.search {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+
+/* Grid de productos */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+
+  .nombre {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .acciones i {
+    margin-left: 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #6b7280;
+
+    &:hover {
+      color: #111;
+    }
+  }
+}
+
+.categoria {
+  color: #6b7280;
+  margin-bottom: 0.3rem;
+}
+
+.descripcion {
+  margin-bottom: 1rem;
+  color: #4b5563;
+}
+
+/* Precio y stock */
+.precio-row,
+.stock-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+
+  label {
+    font-weight: 600;
+    margin-right: 0.3rem;
+  }
+}
+
+.precio {
+  color: #111;
+  font-weight: 700;
+}
+
+.unidades {
+  margin-right: 0.5rem;
+}
+
+.badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.stock-ok {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.stock-low {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Resumen estilo dashboard */
+.resumen {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.box {
+  background: #fff;
+  padding: 1.7rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+
+  h3 {
+    font-size: 1.7rem;
+    margin: 0;
+  }
+
+  .rojo {
+    color: #dc2626;
+  }
+
+  p {
+    margin: 0.3rem 0 0 0;
+    color: #6b7280;
+  }
+}
