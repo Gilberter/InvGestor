@@ -1,1 +1,76 @@
-<p>reportes works!</p>
+<div class="reportes-container">
+
+  <div class="header">
+    <div>
+      <h2>Reportes y Analytics</h2>
+      <p>Análisis detallado del rendimiento de tu negocio</p>
+    </div>
+
+    <button class="btn-exportar">
+      <i class="fas fa-download"></i> Exportar
+    </button>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filtros">
+    <div>
+      <label>Periodo:</label>
+      <input type="date" [(ngModel)]="fromDate">
+      <span>→</span>
+      <input type="date" [(ngModel)]="toDate">
+    </div>
+
+    <select [(ngModel)]="typeReport">
+      <option value="ventas">Reporte de Ventas</option>
+      <option value="productos">Reporte de Productos</option>
+      <option value="categorias">Reporte por Categoría</option>
+    </select>
+  </div>
+
+  <!-- MÉTRICAS -->
+  <div class="cards">
+    <div class="card">
+      <h4>Ingresos Totales</h4>
+      <h2>${{ metrics.ingresos | number }}</h2>
+      <p class="positivo">↑ +12% vs período anterior</p>
+    </div>
+
+    <div class="card">
+      <h4>Órdenes Totales</h4>
+      <h2>{{ metrics.ordenes }}</h2>
+      <p class="positivo">↑ +8% vs período anterior</p>
+    </div>
+
+    <div class="card">
+      <h4>Valor Promedio Orden</h4>
+      <h2>${{ metrics.promedio | number }}</h2>
+      <p class="negativo">↓ -2% vs período anterior</p>
+    </div>
+
+    <div class="card">
+      <h4>Margen de Ganancia</h4>
+      <h2>{{ metrics.margen }}%</h2>
+      <p class="positivo">↑ +5% vs período anterior</p>
+    </div>
+  </div>
+
+  <!-- LINE CHART -->
+  <div class="panel">
+    <h3>Ingresos por Mes</h3>
+    <canvas baseChart [data]="lineChartData" chartType="line"></canvas>
+  </div>
+
+  <!-- GRÁFICOS INFERIORES -->
+  <div class="bottom">
+    <div class="panel">
+      <h3>Productos Más Vendidos</h3>
+      <canvas baseChart [data]="barChartData" chartType="bar"></canvas>
+    </div>
+
+    <div class="panel">
+      <h3>Ventas por Categoría</h3>
+      <canvas baseChart [data]="pieChartData" chartType="pie"></canvas>
+    </div>
+  </div>
+
+</div>
