@@ -1,3 +1,6 @@
+@use '../../styles/palette' as palette;
+
+
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -10,7 +13,6 @@
   border-right: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 1rem;
 }
 
@@ -33,13 +35,16 @@
   transition: background 0.2s;
 }
 
+
 .menu a.active,
 .menu a:hover {
-  background: #2563eb;
-  color: white;
+  background: map-get(palette.$invgestor-colors, primary);
+  color: #fff;
 }
 
+
 .sidebar-footer {
+  margin-top: auto;
   text-align: center;
   font-size: 0.875rem;
   color: #6b7280;
@@ -47,6 +52,5 @@
 
 .main-content {
   flex-grow: 1;
-  padding: 2rem;
   overflow-y: auto;
 }

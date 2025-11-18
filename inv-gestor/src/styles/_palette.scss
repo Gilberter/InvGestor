@@ -1,0 +1,23 @@
+// src/styles/_palette.scss
+
+// Colores base
+$color-primary: #2563eb;   // Azul principal
+$color-accent: #f59e0b;    // Amarillo acento
+$color-warn: #ef4444;      // Rojo advertencia
+$color-success: #10b981;   // Verde éxito
+$color-bg: #f9fafb;        // Fondo general
+$color-surface: #ffffff;   // Tarjetas
+$color-text: #1f2937;      // Texto principal
+$color-muted: #6b7280;     // Texto secundario
+
+// Exporta como map para usar en otros archivos
+$invgestor-colors: (
+  primary: $color-primary,
+  accent: $color-accent,
+  warn: $color-warn,
+  success: $color-success,
+  bg: $color-bg,
+  surface: $color-surface,
+  text: $color-text,
+  muted: $color-muted
+);
