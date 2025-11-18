@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.invgestorback.model.*;
 import com.invgestorback.repository.*;
-import org.springframework.web.cors.CorsConfiguration;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -65,15 +64,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/home/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors(cors -> cors.configurationSource(request -> {
-                    var config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:4200"));
-                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(List.of("*"));
-                    config.setAllowCredentials(true);
-                    return config;
-                }));
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -111,11 +102,6 @@ public class SecurityConfig {
 
                     }
             );
-
-            String emailUserEmployed = "Employed@gmail.com";
-            String passwordEmployed = "Employed123";
-
-
 
             String nameProduct = "Televisor";
             productRepository.findByNameProduct(nameProduct).orElseGet(
