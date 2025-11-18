@@ -3,66 +3,78 @@
   <!-- Header -->
   <div class="header">
     <div>
-      <h2>Gestión de Productos</h2>
+      <h1>Gestión de Productos</h1>
       <p>Administra tu inventario de productos</p>
     </div>
 
-    <button class="btn-nuevo">+ Nuevo Producto</button>
+    <button class="btn-nuevo">
+      + Nuevo Producto
+    </button>
   </div>
 
   <!-- Buscador -->
-  <input
-    type="text"
-    class="search"
-    placeholder="Buscar productos por nombre o categoría..."
-  />
+  <div class="search-container">
+    <input
+      type="text"
+      class="search"
+      placeholder="Buscar productos por nombre o categoría..."
+    />
+  </div>
 
-  <!-- Grid de productos -->
+  <!-- Grid de productos (estilo tarjetas grandes) -->
   <div class="grid">
     <div class="card" *ngFor="let p of productos">
+
+      <!-- Cabecera de la tarjeta -->
       <div class="card-header">
-        <h3>{{ p.nombre }}</h3>
+        <h3 class="nombre">{{ p.nombre }}</h3>
+
         <div class="acciones">
           <i class="fas fa-edit"></i>
           <i class="fas fa-trash"></i>
         </div>
       </div>
 
+      <!-- Contenido -->
       <p class="categoria">{{ p.categoria }}</p>
       <p class="descripcion">{{ p.descripcion }}</p>
 
-      <p class="precio">Precio:
-        <strong>{{ p.precio | currency:'COP' }}</strong>
-      </p>
+      <div class="precio-row">
+        <label>Precio:</label>
+        <span class="precio">{{ p.precio | currency:'COP' }}</span>
+      </div>
 
-      <p class="stock">
-        Stock: <strong>{{ p.stock }} unidades</strong>
+      <div class="stock-row">
+        <label>Stock:</label>
+        <span class="unidades">{{ p.stock }} unidades</span>
+
         <span class="badge" [ngClass]="p.stock > 0 ? 'stock-ok' : 'stock-low'">
           {{ p.stock > 0 ? 'En stock' : 'Bajo stock' }}
         </span>
-      </p>
+      </div>
+
     </div>
   </div>
 
-  <!-- Resumen -->
+  <!-- Resumen Dashboard -->
   <div class="resumen">
-    <div>
+    <div class="box">
       <h3>{{ productos.length }}</h3>
       <p>Total Productos</p>
     </div>
 
-    <div>
+    <div class="box">
       <h3>{{ totalUnidades }}</h3>
       <p>Unidades en Stock</p>
     </div>
 
-    <div>
+    <div class="box">
       <h3>{{ totalValor | currency:'COP' }}</h3>
       <p>Valor Total Inventario</p>
     </div>
 
-    <div>
-      <h3>{{ productosStockBajo }}</h3>
+    <div class="box">
+      <h3 class="rojo">{{ productosStockBajo }}</h3>
       <p>Productos Stock Bajo</p>
     </div>
   </div>

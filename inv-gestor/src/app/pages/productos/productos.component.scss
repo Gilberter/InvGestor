@@ -1,79 +1,138 @@
 .productos-container {
-  background: #f9fafb;
+  background: #fff;
   padding: 2rem;
-  border-radius: 12px;
 }
 
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    color: #6b7280;
+  }
 }
 
 .btn-nuevo {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
+  background: #2563eb;
   border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
   cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #1d4ed8;
+  }
 }
 
-.btn-nuevo:hover {
-  background-color: #1e40af;
+/* Buscador */
+.search-container {
+  margin-bottom: 1.5rem;
 }
 
 .search {
   width: 100%;
-  padding: 0.7rem;
-  margin: 1.2rem 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 0.95rem;
 }
 
 /* Grid de productos */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
   gap: 1.5rem;
 }
 
 .card {
-  background: white;
-  padding: 1.2rem;
-  border-radius: 10px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  }
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 0.4rem;
+
+  .nombre {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .acciones i {
+    margin-left: 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #6b7280;
+
+    &:hover {
+      color: #111;
+    }
+  }
 }
 
 .categoria {
   color: #6b7280;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .descripcion {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  color: #4b5563;
+}
+
+/* Precio y stock */
+.precio-row,
+.stock-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.4rem;
+
+  label {
+    font-weight: 600;
+    margin-right: 0.3rem;
+  }
 }
 
 .precio {
-  margin-top: 0.5rem;
-  font-weight: bold;
+  color: #111;
+  font-weight: 700;
 }
 
-.stock {
-  margin-top: 0.3rem;
+.unidades {
+  margin-right: 0.5rem;
 }
 
 .badge {
-  padding: 0.25rem 0.6rem;
+  padding: 0.2rem 0.7rem;
   border-radius: 999px;
-  font-size: 0.8rem;
-  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .stock-ok {
@@ -86,16 +145,32 @@
   color: #b91c1c;
 }
 
-/* Resumen */
+/* Resumen estilo dashboard */
 .resumen {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  background: white;
-  border-radius: 8px;
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
-.resumen div {
+.box {
+  background: #fff;
+  padding: 1.7rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
   text-align: center;
+
+  h3 {
+    font-size: 1.7rem;
+    margin: 0;
+  }
+
+  .rojo {
+    color: #dc2626;
+  }
+
+  p {
+    margin: 0.3rem 0 0 0;
+    color: #6b7280;
+  }
 }

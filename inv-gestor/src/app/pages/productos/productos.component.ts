@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import {  MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 interface Producto {
@@ -15,7 +16,8 @@ interface Producto {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    MatIconModule
   ],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.scss']
