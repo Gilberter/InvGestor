@@ -7,51 +7,66 @@
 
     <h3 class="login-title">Registro</h3>
 
-    <label for="correo">Correo</label>
+    <label for="correo">Correo *</label>
     <input
       id="correo"
       type="email"
       [(ngModel)]="correo"
       placeholder="Ingrese el correo electrónico"
+      [disabled]="isLoading"
     />
 
-    <label for="contrasena">Contraseña</label>
+    <label for="contrasena">Contraseña *</label>
     <input
       id="contrasena"
       type="password"
       [(ngModel)]="contrasena"
-      placeholder="Ingrese su contraseña"
+      placeholder="Ingrese su contraseña (mínimo 6 caracteres)"
+      [disabled]="isLoading"
     />
 
-    <label for="empresa">Nombre de empresa</label>
+    <label for="empresa">Nombre de empresa *</label>
     <input
       id="empresa"
       [(ngModel)]="empresa"
       placeholder="Ingresar nombre"
+      [disabled]="isLoading"
     />
 
-    <label for="nit">NIT</label>
-    <input id="nit" [(ngModel)]="nit" placeholder="Ingresar NIT" />
+    <label for="nit">NIT *</label>
+    <input 
+      id="nit" 
+      [(ngModel)]="nit" 
+      placeholder="Ingresar NIT (solo números)" 
+      type="number"
+      [disabled]="isLoading"
+    />
 
-    <label for="responsable">Nombre del responsable</label>
+    <label for="responsable">Nombre del responsable *</label>
     <input
       id="responsable"
       [(ngModel)]="responsable"
       placeholder="Ingresar nombre"
+      [disabled]="isLoading"
     />
 
-    <label for="documento">Documento de identidad</label>
+    <label for="documento">Documento de identidad *</label>
     <input
       id="documento"
       [(ngModel)]="documento"
       placeholder="Ingresar número de documento"
+      [disabled]="isLoading"
     />
 
-    <button class="upload-button" (click)="subirLogo()">Subir logo</button>
+    <button class="upload-button" (click)="subirLogo()" [disabled]="isLoading">
+      Subir logo
+    </button>
 
-    <button (click)="registrarse()">Registrarse</button>
+    <button (click)="registrarse()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Registrarse</span>
+      <span *ngIf="isLoading">Registrando...</span>
+    </button>
 
     <a routerLink="/login" class="forgot-link">Volver al inicio de sesión</a>
   </div>
 </div>
-

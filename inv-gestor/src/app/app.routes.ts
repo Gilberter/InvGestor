@@ -1,3 +1,4 @@
+// app.routes.ts
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -8,27 +9,59 @@ import { VentasComponent } from './pages/ventas/ventas.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { ComprasComponent } from './pages/compras/compras.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
+import { roleGuard } from './interceptors/role.guard';
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 
+// app.routes.ts
 export const routes: Routes = [
-  // Páginas públicas (sin sidebar)
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
 
-  // Páginas privadas (con sidebar)
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [roleGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'ventas', component: VentasComponent },
-      { path: 'productos', component: ProductosComponent },
-      { path: 'compras', component: ComprasComponent },
-      { path: 'reportes', component: ReportesComponent },
+
+      // Roles OWNER + ADMIN
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'productos',
+        component: ProductosComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['OWNER', 'ADMIN', "EMPLOYED"] }
+      },
+      {
+        path: 'reportes',
+        component: ReportesComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['OWNER', 'ADMIN'] }
+      },
+
+      // Roles EMPLOYED + OWNER + ADMIN
+      {
+        path: 'ventas',
+        component: VentasComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'compras',
+        component: ComprasComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
+      }
     ]
   },
 
-  // Redirección por defecto
+  { path: 'access-denied', component: AccessDeniedComponent },
+
   { path: '**', redirectTo: 'login' }
 ];
