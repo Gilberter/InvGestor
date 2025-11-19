@@ -1,0 +1,48 @@
+<div class="login-container">
+  <div class="login-card">
+
+    <h2>Registrar Venta</h2>
+
+    <label>Nombre del Cliente *</label>
+    <input [(ngModel)]="clientName" placeholder="Nombre del cliente" [disabled]="isLoading"/>
+
+    <h3>Agregar Producto</h3>
+
+    <label>ID del Producto *</label>
+    <input type="number" [(ngModel)]="productId" placeholder="ID del producto" [disabled]="isLoading"/>
+
+    <label>Cantidad *</label>
+    <input type="number" [(ngModel)]="quantity" placeholder="Cantidad" [disabled]="isLoading"/>
+
+    <label>Precio *</label>
+    <input type="number" [(ngModel)]="price" placeholder="Precio unitario" [disabled]="isLoading"/>
+
+    <button (click)="agregarItem()" [disabled]="isLoading">Agregar Producto</button>
+
+    <h3>Productos Agregados</h3>
+
+    <table *ngIf="saleItems.length > 0">
+      <tr>
+        <th>ID Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Eliminar</th>
+      </tr>
+
+      <tr *ngFor="let item of saleItems; let i = index">
+        <td>{{ item.productId }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td><button (click)="eliminarItem(i)">X</button></td>
+      </tr>
+    </table>
+
+    <button (click)="registrarVenta()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Registrar Venta</span>
+      <span *ngIf="isLoading">Guardando...</span>
+    </button>
+
+    <a routerLink="/dashboard" class="forgot-link">Volver</a>
+
+  </div>
+</div>

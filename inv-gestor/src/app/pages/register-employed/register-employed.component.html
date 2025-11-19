@@ -1,0 +1,33 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="logo-container">
+      <img src="assets/logo1.png" alt="Logo" class="logo" />
+      <h2>InvGestor</h2>
+    </div>
+
+    <h3 class="login-title">Registro de Empleado</h3>
+
+    <label for="correo">Correo *</label>
+    <input id="correo" type="email" [(ngModel)]="correo" [disabled]="isLoading"
+           placeholder="Ingrese el correo electrónico"/>
+
+    <label for="contrasena">Contraseña *</label>
+    <input id="contrasena" type="password" [(ngModel)]="contrasena" [disabled]="isLoading"
+           placeholder="Ingrese contraseña"/>
+
+    <label for="nombre">Nombre *</label>
+    <input id="nombre" [(ngModel)]="nombre" [disabled]="isLoading"
+           placeholder="Ingresar nombre"/>
+
+    <label for="apellido">Apellido *</label>
+    <input id="apellido" [(ngModel)]="apellido" [disabled]="isLoading"
+           placeholder="Ingresar apellido"/>
+
+    <button (click)="registrarEmpleado()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Registrar empleado</span>
+      <span *ngIf="isLoading">Registrando...</span>
+    </button>
+
+    <a routerLink="/dashboard" class="forgot-link">Volver</a>
+  </div>
+</div>
