@@ -33,6 +33,8 @@ export class LoginComponent {
       next: (token) => {
         this.isLoading = false;
         console.log('Login successful, token stored:', token);
+
+        const roles = this.authService.getUserRoles();
         
         // Token is automatically stored by the service
         // Verify token is stored
@@ -40,7 +42,13 @@ export class LoginComponent {
         console.log('Token stored in localStorage:', storedToken);
         
         // Redirect to dashboard
-        this.router.navigate(['/dashboard']);
+        if (roles.includes('OWNER') || roles.includes('ADMIN')) {
+          this.router.navigate(['/dashboard']);
+        } else if (roles.includes('EMPLOYED')) {
+          this.router.navigate(['/compras-form']);
+        } else {
+          alert('User role not recognized.');
+        }
       },
       error: (error) => {
         this.isLoading = false;

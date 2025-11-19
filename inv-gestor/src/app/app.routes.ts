@@ -71,6 +71,12 @@ export const routes: Routes = [
         component: VentasFormComponent,
         canActivate: [roleGuard],
         data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'compras-form',
+        component: ComprasComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
       }
     ]
   },
