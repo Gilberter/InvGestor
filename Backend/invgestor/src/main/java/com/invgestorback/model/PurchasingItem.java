@@ -17,11 +17,11 @@ public class PurchasingItem {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    private int quantity;
+    private long quantity;
     private double price;
 
     public PurchasingItem() {}
-    public PurchasingItem(Purchasing purchasing, Product product, int quantity, double price) {
+    public PurchasingItem(Purchasing purchasing, Product product, long quantity, double price) {
         this.product = product;
         this.purchasing = purchasing;
         this.quantity = quantity;
@@ -46,10 +46,10 @@ public class PurchasingItem {
     public void setProduct(Product product) {
         this.product = product;
     }
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
     public double getPrice() {

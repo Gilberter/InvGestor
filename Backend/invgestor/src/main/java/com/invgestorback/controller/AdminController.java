@@ -83,13 +83,27 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody AuthController.RegisterRequest request) {
-        return userService.registerUser(
-                request.getEmail(),
-                request.getPassword(),
-                request.getFirstName(),
-                request.getLastName()
-        );
+    public ResponseEntity<?> register(@RequestBody AuthController.RegisterRequest request) {
+        try {
+            User newEmployed = userService.registerUser(
+                    request.getEmail(),
+                    request.getPassword(),
+                    request.getFirstName(),
+                    request.getLastName()
+            );
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Empleado registrado correctamente");
+            response.put("employeeId", newEmployed.getId());
+            response.put("email", newEmployed.getEmail());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch(Exception e) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("error", "No se pudo registrar el empleado");
+            error.put("details", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        }
+
     }
 
     @PostMapping("/test")
