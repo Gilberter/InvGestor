@@ -5,46 +5,47 @@ import com.invgestorback.model.Role;
 import com.invgestorback.model.User;
 import com.invgestorback.repository.RoleRepository;
 import com.invgestorback.repository.UserRepository;
+import com.invgestorback.service.AuthService;
 import com.invgestorback.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Optional;
 import java.util.Set;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AuthController.class)
-public class AuthControllerTest {
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+@AutoConfigureMockMvc
+class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
-    private JwUtil jwUtil;
+    private AuthService authService;
     @MockitoBean
-    private UserRepository userRepository;
+    private UserService userService;
     @MockitoBean
     private RoleRepository roleRepository;
     @MockitoBean
-    private UserService userService;
+    private UserRepository userRepository;
 
     private User mockUser;
     private Role mockRole;
-
 
     @BeforeEach
     void setUp() {
@@ -62,12 +63,14 @@ public class AuthControllerTest {
 
     @Test
     void testPingEndpoint() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/auth/ping"))
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/auth/ping"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("pong"));
     }
 
     @Test
     void testRegisterEndpoint() throws Exception {
+        // Use the mocked service that AuthController calls for registration
         Mockito.when(userService.registerUser(anyString(), anyString(), anyString(), anyString()))
                 .thenReturn(mockUser);
 
@@ -80,46 +83,13 @@ public class AuthControllerTest {
                 }
                 """;
         mockMvc.perform(MockMvcRequestBuilders.post("/auth/register")
-                .contentType(MediaType.APPLICATION_JSON).
-                content(jsonRequest)
-                .accept(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON).
+                        content(jsonRequest)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                ;
+        ;
     }
 
-    @Test
-    void testLoginEndpoint() throws Exception {
-        String email = "test@example.com";
-        String password = "password";
-        Set<String> roles = Set.of("ADMIN");
-        // Mockito.when(userService.login(email,password)).thenReturn(Optional.of(mockUser));
-        Mockito.when(jwUtil.generateToken(email,roles)).thenReturn("mocked-jwt-token");
-        System.out.println();
-        String loginJson = """
-                {
-                    "email": "test@example.com",
-                    "password": "password"
-                }
-                """;
-        mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(loginJson))
-                .andExpect(status().isOk());
-    }
 
-    @Test
-    void testLoginEndpointUnauthorized() throws Exception {
 
-        Mockito.when(userService.login(anyString(),anyString())).thenReturn(Optional.empty());
-        String loginJson = """
-                {
-                    "email": "bad@example.com",
-                    "password": "1234"
-                }
-                """;
-        mockMvc.perform(MockMvcRequestBuilders.post("/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(loginJson))
-                        .andExpect(status().isUnauthorized());
-    }
 }

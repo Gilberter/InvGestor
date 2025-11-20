@@ -83,7 +83,7 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AuthController.RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
             User newEmployed = userService.registerUser(
                     request.getEmail(),
@@ -168,4 +168,20 @@ public class AdminController {
 
 
     }
+    public static class RegisterRequest {
+        private String email;
+        private String password;
+        private String firstName;
+        private String lastName;
+
+        // Getters y Setters
+        public String getEmail() { return email; }
+
+        public String getPassword() { return password; }
+
+        public String getFirstName() { return firstName; }
+
+        public String getLastName() { return lastName; }
+    }
+
 }
