@@ -18,7 +18,7 @@ export const roleGuard: CanActivateFn = (route, state) => {
 
   // 2. Si la ruta tiene roles y no los cumple → acceso denegado
   if (requiredRoles && !authService.hasRequiredRole(requiredRoles)) {
-    router.navigate(['/dashboard']); // o "access-denied"
+    router.navigate(['/access-denied']); // o "access-denied"
     return false;
   }
 

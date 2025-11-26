@@ -11,6 +11,8 @@ import { ComprasComponent } from './pages/compras/compras.component';
 import { ReportesComponent } from './pages/reportes/reportes.component';
 import { roleGuard } from './interceptors/role.guard';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { RegisterEmployedComponent } from './pages/register-employed/register-employed.component';
+import { VentasFormComponent } from './pages/ventas-form/ventas-form.component';
 
 // app.routes.ts
 export const routes: Routes = [
@@ -54,6 +56,24 @@ export const routes: Routes = [
       },
       {
         path: 'compras',
+        component: ComprasComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'register-employed',
+        component: RegisterEmployedComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'ventas-form',
+        component: VentasFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
+      },
+      {
+        path: 'compras-form',
         component: ComprasComponent,
         canActivate: [roleGuard],
         data: { roles: ['EMPLOYED', 'OWNER', 'ADMIN'] }
